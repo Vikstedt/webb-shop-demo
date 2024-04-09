@@ -1,27 +1,26 @@
 import { Link } from "react-router-dom";
+
 import { CgShoppingCart } from "react-icons/cg";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import OpenCartNavbar from "./OpenCartNavbar";
 import OpenSideNavbar from "./OpenSideNavbar";
 
+import ShoppingCartContext from "../../Context/ShoppingCartContext"; // Importing ShoppingCartContext
 
 
 export default function Navbar() {
+    const { totalQuantity } = useContext(ShoppingCartContext);
+
     const [cartIsOpen, setCartIsOpen] = useState(false)
     const [sideIsOpen, setSideIsOpen] = useState(false)
-
-    const [totalQuantity, setTotalQuantity] = useState();
 
     function changeCartOpen() {
         setCartIsOpen(!cartIsOpen)
     }
 
-    const handleTotalQuantityCartNavbar = (data) => {
-        setTotalQuantity(data)
-    };
     return (
         <>
             <header className="sticky top-0 z-40 bg-slate-300 shadow-md">
@@ -47,12 +46,13 @@ export default function Navbar() {
 
                     <p className="border-gray-400 border-2 px-4 py-1 rounded-lg md:hidden">LOGO</p>
 
-                    
+
                     <button className="relative ">
-                        <CgShoppingCart className="h-12 w-12" onClick={changeCartOpen} />
+                        <CgShoppingCart className="md:h-10 md:w-10 h-10 w-10" onClick={changeCartOpen} />
+
                         {totalQuantity !== 0 ? (
-                            <div className="absolute h-4 w-4 top-0 -right-2 flex justify-center items-center bg-red-500 rounded-full p-3">
-                                <p className="">{totalQuantity}</p>
+                            <div className="absolute h-4 w-4 -top-1 -right-2 flex justify-center items-center bg-red-500 shadow-lg rounded-full md:p-[12px] p-[10px]">
+                                <p className="text-sm">{totalQuantity}</p>
                             </div>
                         ) : (null)
                         }
@@ -60,7 +60,7 @@ export default function Navbar() {
                 </nav>
 
             </header>
-            <OpenCartNavbar cartIsOpen={cartIsOpen} changeCartOpen={changeCartOpen} sendTotalQuantityCartNavbar={handleTotalQuantityCartNavbar} />
+            <OpenCartNavbar cartIsOpen={cartIsOpen} changeCartOpen={changeCartOpen} />
         </>
     )
 }

@@ -5,7 +5,7 @@ const NumberDisplay = ({ amount }) => {
   const formattedAmount = amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   return (
-      <p className='font-bold'>{`${formattedAmount} :-`}</p>
+      <p className='font-bold'>{`${formattedAmount}`}</p>
   );
 };
 

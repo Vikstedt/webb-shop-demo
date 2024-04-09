@@ -17,9 +17,9 @@ export default function Footer() {
                     <div>
                         <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
                         <ul className="list-none">
-                            <li className="inline-block mr-4"><a href="#" className="text-sm text-gray-400 hover:text-white">Facebook</a></li>
-                            <li className="inline-block mr-4"><a href="#" className="text-sm text-gray-400 hover:text-white">Twitter</a></li>
-                            <li className="inline-block mr-4"><a href="#" className="text-sm text-gray-400 hover:text-white">Instagram</a></li>
+                            <li className="inline-block mr-4"><a href="https://www.facebook.com/" className="text-sm text-gray-400 hover:text-white">Facebook</a></li>
+                            <li className="inline-block mr-4"><a href="https://twitter.com/" className="text-sm text-gray-400 hover:text-white">Twitter</a></li>
+                            <li className="inline-block mr-4"><a href="https://www.instagram.com/" className="text-sm text-gray-400 hover:text-white">Instagram</a></li>
                         </ul>
                     </div>
                 </div>

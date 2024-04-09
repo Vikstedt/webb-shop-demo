@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-
 import { Link } from "react-router-dom";
 
 import ShoppingCartContext from "../../Context/ShoppingCartContext"; // Importing ShoppingCartContext
@@ -10,30 +8,8 @@ import DisplayShoppingCart from "../DisplayShoppingCart";
 import { CgShoppingCart, CgClose } from "react-icons/cg";
 
 
-export default function OpenCartNavbar({ cartIsOpen, changeCartOpen, sendTotalQuantityCartNavbar  }) {
-    const { Cart, calculateTotalCost } = useContext(ShoppingCartContext);
-
-    const [totalQuantity, setTotalQuantity] = useState(0);
-    const [totalCost, setTotalCost] = useState(calculateTotalCost());
-
-    const updateTotalQuantity = () => {
-        // Calculate the total quantity based on all items in the cart
-        const newTotalQuantity = Cart.reduce((total, item) => total + item.Quantity, 0);
-
-        setTotalQuantity(newTotalQuantity);
-        setTotalCost(calculateTotalCost());
-    };
-
-    const handleEvent = () => {
-        // Invoke the callback function and pass data to OtherComponent
-        sendTotalQuantityCartNavbar(totalQuantity);
-      };
-
-    // Call updateTotalQuantity whenever the Cart changes
-    useEffect(() => {
-        updateTotalQuantity();
-        handleEvent()
-    }, [Cart]);
+export default function OpenCartNavbar({ cartIsOpen, changeCartOpen  }) {
+    const { Cart, totalCost, totalQuantity } = useContext(ShoppingCartContext);
 
     return(
         <>
@@ -49,7 +25,7 @@ export default function OpenCartNavbar({ cartIsOpen, changeCartOpen, sendTotalQu
                                     <h1 className="text-lg font-bold text-center">Your Cart Are Empty</h1>
                                 </div>
                                 <div className="my-auto text-center">
-                                    <img src="/empty_cart.svg" alt="Empty Cart" className="h-32 w-32 mb-4 mx-auto" />
+                                    <CgShoppingCart className="h-32 w-32 mb-4 mx-auto"/>
                                     <p className="text-xl text-gray-800 mb-2 font-bold">Your cart is empty</p>
                                     <p className="text-sm text-gray-600">Browse our products and start adding items to your cart.</p>
                                 </div>
@@ -93,7 +69,7 @@ export default function OpenCartNavbar({ cartIsOpen, changeCartOpen, sendTotalQu
                                     <h1 className="text-lg font-bold text-center">Your Cart Are Empty</h1>
                                 </div>
                                 <div className="my-auto text-center">
-                                    <img src="/empty_cart.svg" alt="Empty Cart" className="h-32 w-32 mb-4 mx-auto" />
+                                    <CgShoppingCart className="h-32 w-32 mb-4 mx-auto"/>
                                     <p className="text-xl text-gray-800 mb-2 font-bold">Your cart is empty</p>
                                     <p className="text-sm text-gray-600">Browse our products and start adding items to your cart.</p>
                                 </div>

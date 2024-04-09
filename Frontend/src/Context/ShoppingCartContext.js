@@ -7,18 +7,10 @@ const ShoppingCartContext = createContext({});
 //   { id:1, Title:"hej1", Description:"bla blabla bla blabla", img:"", Price:1 },
 //   { id:2, Title:"hej2", Description:"bla blabla bla blabla", img:"", Price:10 },
 //   { id:3, Title:"hej3", Description:"bla blabla bla blabla", img:"", Price:100 },
-//   { id:4, Title:"hej4", Description:"bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla bla blabla ", img:"", Price:1000 },
-//   { id:5, Title:"hej5", Description:"bla blabla bla blabla", img:"", Price:10000 },
-//   { id:6, Title:"hej6", Description:"bla blabla bla blabla", img:"", Price:100000 },
-//   { id:8, Title:"hej7", Description:"bla blabla bla blabla", img:"", Price:1000000 },
-//   { id:9, Title:"hej7", Description:"bla blabla bla blabla", img:"", Price:100000 },
-//   { id:10, Title:"hej7", Description:"bla blabla bla blabla", img:"", Price:1000 },
-//   { id:11, Title:"hej7", Description:"bla blabla bla blabla", img:"", Price:100 },
-//   { id:12, Title:"hej7", Description:"bla blabla bla blabla", img:"", Price:10 },
-//   { id:13, Title:"hej7", Description:"bla blabla bla blabla", img:"", Price:1 },
+//   { id:4, Title:"hej4", Description:"bla blabla bla blabla", img:"", Price:1000 },
 // ]
 
-// const CartEX = [
+// const Cart = [
 //   { id:1, ProductId:1, Quantity:2 },
 //   { id:2, ProductId:3, Quantity:4 },
 //   { id:3, ProductId:5, Quantity:3 },
@@ -29,50 +21,74 @@ const ShoppingCartContext = createContext({});
 export function ShoppingCartProvider({ children }) {
   const [ Cart, setCart ] = useState([])
   const [ Products, setProducts ] = useState([])
-  
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const [totalCost, setTotalCost] = useState(0);
+
+  // When loading Webb fetch products from server
   useEffect(() => {
-    // Fetch data from your Express server
     fetch('http://localhost:5000/products')
       .then(response => response.json())
       .then(data => setProducts(data))
       .catch(error => console.error('Error:', error));
-  }, []); 
+  }, []);
 
-  const calculateTotalCost = () => {
-    return Cart.reduce((total, cartItem) => {
-      const product = Products.find(product => product.id === cartItem.ProductId);
+  // When Cart is uppdating items, call these funtions so the numbers are up to date
+  useEffect(() => {
+    updateTotalQuantity();
+    updateTotalPrice();
+  }, [Cart]);
+
+  // Calculating total Price of al items in Cart depending on Quantity and number of items
+  const updateTotalPrice = () => {
+    // Calculate the total price based on all items in the cart
+    const newTotalPrice = Cart.reduce((total, item) => {
+      const product = Products.find(product => product.id === item.ProductId);
       if (product) {
-        return total + (parseFloat(product.price) * cartItem.Quantity);
+        return total + parseFloat(product.price) * item.Quantity;
       }
-      return total;
+      return total.toFixed(2);
     }, 0);
+    setTotalCost(newTotalPrice);
   };
- 
-  const addItemToCart = (idOfProduct) => {
+
+  // Calculating total Quantity of al items in Cart
+  const updateTotalQuantity = () => {
+    // Calculate the total quantity based on all items in the cart
+    const newTotalQuantity = Cart.reduce((total, item) => total + item.Quantity, 0);
+
+    setTotalQuantity(newTotalQuantity);
+  };
+  
+  // Add item to Cart deppending on id of Product, and can add custom numer of items
+  const addItemToCart = (idOfProduct, quantityFromProductPage) => {
+    // Default quantity to 1 if not defined or falsy
+    const quantityToAdd = quantityFromProductPage || 1;
+  
     // Check if the cart is empty
     if (Cart.length === 0) {
       // If empty, add the first item to the cart
-      setCart([{ id: 1, ProductId: idOfProduct, Quantity: 1 }]);
+      setCart([{ id: 1, ProductId: idOfProduct, Quantity: quantityToAdd }]);
     } else {
       // If not empty, check if the product is already in the cart
       const updatedCart = Cart.map((item) => {
         if (item.ProductId === idOfProduct) {
-          // If the product exists, increment the quantity
-          return { ...item, Quantity: item.Quantity + 1 };
+          // If the product exists, increment the quantity by the quantity from product page
+          return { ...item, Quantity: item.Quantity + quantityToAdd };
         }
         return item;
       });
   
-      // If the product is not in the cart, add it with Quantity 1
+      // If the product is not in the cart, add it with the quantity from product page
       if (!updatedCart.some((item) => item.ProductId === idOfProduct)) {
-        updatedCart.push({ id: Cart.length + 1, ProductId: idOfProduct, Quantity: 1 });
+        updatedCart.push({ id: Cart.length + 1, ProductId: idOfProduct, Quantity: quantityToAdd });
       }
   
       // Update the cart state
       setCart(updatedCart);
     }
   };
-
+  
+  // Subtract item from Cart deppending on id of Product
   const subItemFromCart = (idOfProduct) => {
     // Check if the cart is empty
     if (Cart.length === 0) {
@@ -100,6 +116,7 @@ export function ShoppingCartProvider({ children }) {
     );
   };
   
+  // Deleting all quantity of item from Cart deppending on id of Product
   const delItemFromCart = (idOfProduct) => {
     // Check if the cart is empty
     if (Cart.length === 0) {
@@ -116,7 +133,6 @@ export function ShoppingCartProvider({ children }) {
       setCart(updatedCart);
     }
   };
-  
 
   return (
     <ShoppingCartContext.Provider
@@ -125,7 +141,8 @@ export function ShoppingCartProvider({ children }) {
         subItemFromCart,
         delItemFromCart,
         Products,
-        calculateTotalCost,
+        totalCost,
+        totalQuantity,
         Cart
         }}
     >
