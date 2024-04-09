@@ -1,7 +1,6 @@
-
-import { CgClose, CgChevronRight  } from "react-icons/cg";
 import { Link } from "react-router-dom";
 
+import { CgClose, CgChevronRight  } from "react-icons/cg";
 
 export default function OpenSideNavbar({ sideIsOpen, setSideIsOpen }) {
     return (

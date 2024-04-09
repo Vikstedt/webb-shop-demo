@@ -1,4 +1,3 @@
-
 export default function SideSection() {
     return (
         <div className="bg-gray-200 p-6 lg:rounded-lg shadow-lg h-full lg:mx-4">

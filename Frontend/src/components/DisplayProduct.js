@@ -1,14 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import ShoppingCartContext from "../Context/ShoppingCartContext";
-import { useContext } from "react";
 
 import NumberDisplay from './NumberDisplay';
 
 export default function Display({ product }) {
     const { addItemToCart } = useContext(ShoppingCartContext);
-
     const [isHovered, setIsHovered] = useState(false);
 
     return (

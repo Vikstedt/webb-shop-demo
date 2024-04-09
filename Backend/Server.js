@@ -41,10 +41,8 @@ app.get('/products', (req, res) => {
 app.post('/send_message', function (req, res, next) {
     try {
         const receivedData = req.body; // Assuming the frontend sends data as JSON
-        console.log(receivedData)
 
-        // Process the data (example: save to database)
-        // ...
+        SendContactMessage(receivedData)
 
         res.json({ message: 'API is working properly' });
     } catch (error) {

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
+
 
 import { CgShoppingCart } from "react-icons/cg";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
-
-import { useState, useContext } from "react";
 
 import OpenCartNavbar from "./OpenCartNavbar";
 import OpenSideNavbar from "./OpenSideNavbar";

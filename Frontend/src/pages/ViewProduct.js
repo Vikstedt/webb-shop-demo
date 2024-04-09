@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+
 import ShoppingCartContext from "../Context/ShoppingCartContext"; // Import your context here
 
 import NoProductPage from '../components/NoProductFound';
-
 
 export default function ViewProduct() {
     const { id } = useParams();

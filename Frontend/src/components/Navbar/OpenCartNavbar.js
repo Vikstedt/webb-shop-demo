@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react"; // Importing useContext hook from React
 
 import ShoppingCartContext from "../../Context/ShoppingCartContext"; // Importing ShoppingCartContext
-import { useContext } from "react"; // Importing useContext hook from React
-import DisplayShoppingCart from "../DisplayShoppingCart";
 
+import DisplayShoppingCart from "../DisplayShoppingCart";
 
 import { CgShoppingCart, CgClose } from "react-icons/cg";
 

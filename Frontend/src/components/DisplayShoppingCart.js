@@ -1,5 +1,6 @@
-import ShoppingCartContext from "../Context/ShoppingCartContext"; // Importing ShoppingCartContext
 import { useContext } from "react"; // Importing useContext hook from React
+
+import ShoppingCartContext from "../Context/ShoppingCartContext"; // Importing ShoppingCartContext
 
 import { RiDeleteBinLine } from "react-icons/ri";
 

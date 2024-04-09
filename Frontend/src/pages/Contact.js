@@ -1,4 +1,3 @@
-
 import ContactForm from '../components/Contact/ContactForm.js';
 import SideSection from '../components/Contact/SideSection.js';
 
