@@ -7,5 +7,5 @@ And it is useful to be able to make it easier to develop future projects but als
 ## How to get started
 
 Follow the instructions at this places
-* "Backend"
-* "Frontend"
+* `Backend`
+* `Frontend`
